@@ -6,7 +6,38 @@ let cachedCustomers = [];
 
 // Initialize app with Lead Admin Dipak Pal
 async function initApp() {
+  document.getElementById('btn-export-csv').addEventListener('click', exportInvoicesCsv);
   await switchUser('dipak@brightloop.test', 'Dipak@1234');
+}
+
+async function exportInvoicesCsv(event) {
+  event.preventDefault();
+  const button = document.getElementById('btn-export-csv');
+  button.disabled = true;
+
+  try {
+    const res = await fetch('/api/reports/export-csv', {
+      headers: { 'Authorization': `Bearer ${currentToken}` }
+    });
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.error || 'CSV export failed.');
+    }
+
+    const csv = await res.text();
+    const downloadUrl = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+    const downloadLink = document.createElement('a');
+    downloadLink.href = downloadUrl;
+    downloadLink.download = 'brightloop_finance_report.csv';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    downloadLink.remove();
+    setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+  } catch (err) {
+    alert('CSV export error: ' + err.message);
+  } finally {
+    button.disabled = false;
+  }
 }
 
 // Switch User & Enforce Role-Based UI
