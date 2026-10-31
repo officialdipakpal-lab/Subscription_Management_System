@@ -1,2 +1,0 @@
-# odooarjunatech
-Odoo Hackathon
