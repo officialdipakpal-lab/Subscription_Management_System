@@ -450,7 +450,7 @@
           overdueBadge.classList.add('hidden');
         }
       }
-
+      ///Subscription_Management_System
       // Populate notifications list
       const notifList = document.getElementById('notif-list');
       if (notifList) {
@@ -2825,6 +2825,7 @@
       this.closeModal();
     }
   }
+  //
 
   // Instantiate and attach to global window
   window.app = new BrightloopApp();
