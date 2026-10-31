@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: subscription-management-system
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start

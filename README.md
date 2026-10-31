@@ -338,6 +338,11 @@ npm run db:seed             # demo data: admin, staff, customers, plans, subscri
 npm run dev
 ```
 
+### Deploy on Render
+Use the included `render.yaml` Blueprint to configure the service. For an existing
+Render service, set the **Build Command** to `npm install` and the **Start Command**
+to `npm start` (do not use `yarn npm install`).
+
 ### Environment variables
 | Variable | Description |
 |---|---|

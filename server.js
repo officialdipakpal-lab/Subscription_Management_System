@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('node:path');
 const { db } = require('./src/db/database');
+const { seedDatabase } = require('./src/db/seed');
 const { authenticate, requireRole } = require('./src/middleware/auth');
 const authService = require('./src/services/authService');
 const catalogService = require('./src/services/catalogService');
@@ -11,6 +12,11 @@ const billingEngine = require('./src/services/billingEngine');
 const paymentService = require('./src/services/paymentService');
 const discountTaxEngine = require('./src/services/discountTaxEngine');
 const reportService = require('./src/services/reportService');
+
+const userCount = db.prepare('SELECT COUNT(*) AS count FROM users').get().count;
+if (userCount === 0) {
+  seedDatabase();
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
